@@ -1,0 +1,206 @@
+@function tovw($font){
+	@return ($font / $vw-viewport) * 100 + vw
+};
+@function torem($font){
+	@return ($font / $baseSize) + rem
+};
+@function toem($font){
+	@return ($font / $baseSize) + em
+};
+@function topt($font){
+	@return ($font * 0.75) + pt
+};
+@mixin listE($mRight, $item, $child){
+	display: flex;
+	justify-content: flex-start; 
+	flex-wrap: wrap;
+	#{$child}{
+		margin-right: #{$mRight};
+	}
+	#{$child}:nth-of-type(#{$item}n + 0){
+		margin-right:0
+	}
+}; 
+@mixin grid($values...){
+	display: flex;
+	@each $value in $values{
+		@if $value == 'wr'{
+			flex-wrap: wrap;
+		}
+		@if $value == 'nwr'{
+			flex-wrap: nowrap;
+		}
+		@if $value == 'jstart'{
+			justify-content: flex-start;
+		}
+		@if $value == 'jc'{
+			justify-content: center;
+		}
+		@if $value == 'jend'{
+			justify-content: flex-end;
+		}
+		@if $value == 'jbw'{
+			justify-content: space-between;
+		}
+		@if $value == 'jar'{
+			justify-content: space-around;
+		}
+		@if $value == 'als'{
+			align-items: flex-start;
+		}
+		@if $value == 'alc'{
+			align-items: center;
+		}
+		@if $value == 'ale'{
+			align-items: flex-end;
+		}
+		@if $value == 'cl'{
+			flex-direction: column;
+		}
+		@if $value == 'clr'{
+			flex-direction: column-reverse;
+		}
+		@if $value == 'r'{
+			flex-direction: row;
+		}
+		@if $value == 'rr'{
+			flex-direction: row-reverse;
+		} 
+	} 
+}
+@mixin toMax($mobile) {     
+	@media screen and (max-width: #{$mobile}px) {
+		@content
+	} 
+};
+@mixin minToMax($min, $max) {     
+	@media screen and (min-width: #{$min}px) and (max-width: #{$max}px){
+		@content
+	} 
+};
+@mixin toMin($mobile) {     
+	@media screen and (min-width: #{$mobile}px) {
+		@content
+	} 
+};
+@mixin beforeTL($top,$left){ 
+	&::before{
+		@content; 
+		position: absolute; 
+		top: $top;
+		left: $left; 
+	}
+}
+@mixin beforeTR($top,$right){
+	position: relative;
+	&::before{
+		@content; 
+		position: absolute; 
+		top: $top;
+		right: $right; 
+	}
+}
+@mixin beforeBL($bottom,$left){
+	position: relative;
+	&::before{
+		@content; 
+		position: absolute; 
+		bottom: $bottom;
+		left: $left; 
+	}
+}
+@mixin beforeBR($bottom,$right){
+	position: relative;
+	&::before{
+		@content; 
+		position: absolute; 
+		bottom: $bottom;
+		right: $right; 
+	}
+}
+@mixin afterTL($top,$left){
+	position: relative;
+	&::after{
+		@content; 
+		position: absolute; 
+		top: $top;
+		left: $left; 
+	}
+}
+@mixin afterTR($top,$right){
+	position: relative;
+	&::after{
+		@content; 
+		position: absolute; 
+		top: $top;
+		right: $right; 
+	}
+}
+@mixin afterBL($bottom,$left){
+	position: relative;
+	&::after{
+		@content; 
+		position: absolute; 
+		bottom: $bottom;
+		left: $left; 
+	}
+}
+@mixin afterBR($bottom,$right){
+	position: relative;
+	&::after{
+		@content; 
+		position: absolute; 
+		bottom: $bottom;
+		right: $right; 
+	}
+}  
+@mixin center{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+@mixin centerX{
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+@mixin centerY{
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+} 
+@mixin indent($value){
+	text-indent: -$value;
+	margin-left: $value;
+}
+@mixin font($name, $url,$fontWeight){
+	@font-face {
+		font-family: $name;
+		src: url('#{$url}.eot');
+		src: url('#{$url}.eot?#iefix') format('embedded-opentype'),
+			url('#{$url}.woff2') format('woff2'),
+			url('#{$url}.woff') format('woff'),
+			url('#{$url}.ttf') format('truetype'),
+			url('#{$url}.svg##{$url}') format('svg');
+		font-weight: $fontWeight;
+		font-style: normal;
+		font-display: swap;
+	}
+	
+}
+@mixin fontFamily($name,$fontWeight,$tags...){
+	@each $tag in $tags{
+		#{$tag}{
+			font-family: $name;
+			font-weight: $fontWeight;
+		}
+	}
+	
+}
+@mixin opacity($opacity) {
+	opacity: $opacity;
+	$opacity-ie: $opacity * 100;
+	filter: alpha(opacity = $opacity-ie);
+}
